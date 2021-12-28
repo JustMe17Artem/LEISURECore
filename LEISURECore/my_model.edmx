@@ -1,0 +1,727 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище LEISUREModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="ID_Event" />
+          </Key>
+          <Property Name="ID_Event" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Object" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date_Start" Type="date" />
+          <Property Name="ID_Type" Type="int" />
+          <Property Name="Date_End" Type="date" />
+          <Property Name="Available" Type="bit" />
+          <Property Name="Attendance" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Object">
+          <Key>
+            <PropertyRef Name="ID_Object" />
+          </Key>
+          <Property Name="ID_Object" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_Type" Type="int" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="50" />
+          <Property Name="Capacity" Type="int" />
+          <Property Name="Opened" Type="bit" />
+          <Property Name="Attendance" Type="int" />
+          <Property Name="ID_Owner" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="ID_Owner" />
+          </Key>
+          <Property Name="ID_Owner" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO_Boss" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Start_Date" Type="date" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="ID_Request" />
+          </Key>
+          <Property Name="ID_Request" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Object" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_Type_Event" Type="int" />
+          <Property Name="Date_Start" Type="date" />
+          <Property Name="ID_Visitor" Type="int" />
+          <Property Name="Date_End" Type="date" />
+          <Property Name="Contact_Phone" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Type_Event">
+          <Key>
+            <PropertyRef Name="ID_Type" />
+          </Key>
+          <Property Name="ID_Type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Type_Object">
+          <Key>
+            <PropertyRef Name="ID_Type" />
+          </Key>
+          <Property Name="ID_Type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name_Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID_User" />
+          </Key>
+          <Property Name="ID_User" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Visiting">
+          <Key>
+            <PropertyRef Name="ID_OV" />
+          </Key>
+          <Property Name="ID_OV" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="ID_Object" Type="int" />
+          <Property Name="ID_Visitor" Type="int" />
+          <Property Name="ID_Event" Type="int" />
+        </EntityType>
+        <EntityType Name="Visitor">
+          <Key>
+            <PropertyRef Name="ID_Visitor" />
+          </Key>
+          <Property Name="ID_Visitor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="50" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Event_Object">
+          <End Role="Object" Type="Self.Object" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Type_Event">
+          <End Role="Type_Event" Type="Self.Type_Event" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_Event">
+              <PropertyRef Name="ID_Type" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="ID_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Object_Owner">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="0..1" />
+          <End Role="Object" Type="Self.Object" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="ID_Owner" />
+            </Principal>
+            <Dependent Role="Object">
+              <PropertyRef Name="ID_Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Object_Type_Object">
+          <End Role="Type_Object" Type="Self.Type_Object" Multiplicity="0..1" />
+          <End Role="Object" Type="Self.Object" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_Object">
+              <PropertyRef Name="ID_Type" />
+            </Principal>
+            <Dependent Role="Object">
+              <PropertyRef Name="ID_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Object">
+          <End Role="Object" Type="Self.Object" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Type_Event">
+          <End Role="Type_Event" Type="Self.Type_Event" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_Event">
+              <PropertyRef Name="ID_Type" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ID_Type_Event" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Visitor">
+          <End Role="Visitor" Type="Self.Visitor" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitor">
+              <PropertyRef Name="ID_Visitor" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ID_Visitor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visiting_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Visiting" Type="Self.Visiting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID_Event" />
+            </Principal>
+            <Dependent Role="Visiting">
+              <PropertyRef Name="ID_Event" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visiting_Object">
+          <End Role="Object" Type="Self.Object" Multiplicity="0..1" />
+          <End Role="Visiting" Type="Self.Visiting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Visiting">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visiting_Visitor">
+          <End Role="Visitor" Type="Self.Visitor" Multiplicity="0..1" />
+          <End Role="Visiting" Type="Self.Visiting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitor">
+              <PropertyRef Name="ID_Visitor" />
+            </Principal>
+            <Dependent Role="Visiting">
+              <PropertyRef Name="ID_Visitor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище LEISUREModelContainer">
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Object" EntityType="Self.Object" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Owner" EntityType="Self.Owner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type_Event" EntityType="Self.Type_Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type_Object" EntityType="Self.Type_Object" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visiting" EntityType="Self.Visiting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visitor" EntityType="Self.Visitor" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Event_Object" Association="Self.FK_Event_Object">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Type_Event" Association="Self.FK_Event_Type_Event">
+            <End Role="Type_Event" EntitySet="Type_Event" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Object_Owner" Association="Self.FK_Object_Owner">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Object" EntitySet="Object" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Object_Type_Object" Association="Self.FK_Object_Type_Object">
+            <End Role="Type_Object" EntitySet="Type_Object" />
+            <End Role="Object" EntitySet="Object" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Object" Association="Self.FK_Request_Object">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Type_Event" Association="Self.FK_Request_Type_Event">
+            <End Role="Type_Event" EntitySet="Type_Event" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Visitor" Association="Self.FK_Request_Visitor">
+            <End Role="Visitor" EntitySet="Visitor" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visiting_Event" Association="Self.FK_Visiting_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Visiting" EntitySet="Visiting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visiting_Object" Association="Self.FK_Visiting_Object">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="Visiting" EntitySet="Visiting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visiting_Visitor" Association="Self.FK_Visiting_Visitor">
+            <End Role="Visitor" EntitySet="Visitor" />
+            <End Role="Visiting" EntitySet="Visiting" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LEISUREModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="ID_Event" />
+          </Key>
+          <Property Name="ID_Event" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Object" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Start" Type="DateTime" Precision="0" />
+          <Property Name="ID_Type" Type="Int32" />
+          <Property Name="Date_End" Type="DateTime" Precision="0" />
+          <Property Name="Available" Type="Boolean" />
+          <Property Name="Attendance" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Object" Relationship="Self.FK_Event_Object" FromRole="Event" ToRole="Object" />
+          <NavigationProperty Name="Type_Event" Relationship="Self.FK_Event_Type_Event" FromRole="Event" ToRole="Type_Event" />
+          <NavigationProperty Name="Visiting" Relationship="Self.FK_Visiting_Event" FromRole="Event" ToRole="Visiting" />
+        </EntityType>
+        <EntityType Name="Object">
+          <Key>
+            <PropertyRef Name="ID_Object" />
+          </Key>
+          <Property Name="ID_Object" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Type" Type="Int32" />
+          <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Capacity" Type="Int32" />
+          <Property Name="Opened" Type="Boolean" />
+          <Property Name="Attendance" Type="Int32" />
+          <Property Name="ID_Owner" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Event_Object" FromRole="Object" ToRole="Event" />
+          <NavigationProperty Name="Owner" Relationship="Self.FK_Object_Owner" FromRole="Object" ToRole="Owner" />
+          <NavigationProperty Name="Type_Object" Relationship="Self.FK_Object_Type_Object" FromRole="Object" ToRole="Type_Object" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_Request_Object" FromRole="Object" ToRole="Request" />
+          <NavigationProperty Name="Visiting" Relationship="Self.FK_Visiting_Object" FromRole="Object" ToRole="Visiting" />
+        </EntityType>
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="ID_Owner" />
+          </Key>
+          <Property Name="ID_Owner" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO_Boss" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Start_Date" Type="DateTime" Precision="0" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Object" Relationship="Self.FK_Object_Owner" FromRole="Owner" ToRole="Object" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="ID_Request" />
+          </Key>
+          <Property Name="ID_Request" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Object" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Type_Event" Type="Int32" />
+          <Property Name="Date_Start" Type="DateTime" Precision="0" />
+          <Property Name="ID_Visitor" Type="Int32" />
+          <Property Name="Date_End" Type="DateTime" Precision="0" />
+          <Property Name="Contact_Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Object" Relationship="Self.FK_Request_Object" FromRole="Request" ToRole="Object" />
+          <NavigationProperty Name="Type_Event" Relationship="Self.FK_Request_Type_Event" FromRole="Request" ToRole="Type_Event" />
+          <NavigationProperty Name="Visitor" Relationship="Self.FK_Request_Visitor" FromRole="Request" ToRole="Visitor" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Type_Event">
+          <Key>
+            <PropertyRef Name="ID_Type" />
+          </Key>
+          <Property Name="ID_Type" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Event_Type_Event" FromRole="Type_Event" ToRole="Event" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_Request_Type_Event" FromRole="Type_Event" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Type_Object">
+          <Key>
+            <PropertyRef Name="ID_Type" />
+          </Key>
+          <Property Name="ID_Type" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Object" Relationship="Self.FK_Object_Type_Object" FromRole="Type_Object" ToRole="Object" />
+        </EntityType>
+        <EntityType Name="Visiting">
+          <Key>
+            <PropertyRef Name="ID_OV" />
+          </Key>
+          <Property Name="ID_OV" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="ID_Object" Type="Int32" />
+          <Property Name="ID_Visitor" Type="Int32" />
+          <Property Name="ID_Event" Type="Int32" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Visiting_Event" FromRole="Visiting" ToRole="Event" />
+          <NavigationProperty Name="Object" Relationship="Self.FK_Visiting_Object" FromRole="Visiting" ToRole="Object" />
+          <NavigationProperty Name="Visitor" Relationship="Self.FK_Visiting_Visitor" FromRole="Visiting" ToRole="Visitor" />
+        </EntityType>
+        <EntityType Name="Visitor">
+          <Key>
+            <PropertyRef Name="ID_Visitor" />
+          </Key>
+          <Property Name="ID_Visitor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Request" Relationship="Self.FK_Request_Visitor" FromRole="Visitor" ToRole="Request" />
+          <NavigationProperty Name="Visiting" Relationship="Self.FK_Visiting_Visitor" FromRole="Visitor" ToRole="Visiting" />
+        </EntityType>
+        <Association Name="FK_Event_Object">
+          <End Role="Object" Type="Self.Object" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Type_Event">
+          <End Role="Type_Event" Type="Self.Type_Event" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_Event">
+              <PropertyRef Name="ID_Type" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="ID_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visiting_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Visiting" Type="Self.Visiting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID_Event" />
+            </Principal>
+            <Dependent Role="Visiting">
+              <PropertyRef Name="ID_Event" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Object_Owner">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="0..1" />
+          <End Role="Object" Type="Self.Object" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="ID_Owner" />
+            </Principal>
+            <Dependent Role="Object">
+              <PropertyRef Name="ID_Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Object_Type_Object">
+          <End Role="Type_Object" Type="Self.Type_Object" Multiplicity="0..1" />
+          <End Role="Object" Type="Self.Object" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_Object">
+              <PropertyRef Name="ID_Type" />
+            </Principal>
+            <Dependent Role="Object">
+              <PropertyRef Name="ID_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Object">
+          <End Role="Object" Type="Self.Object" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visiting_Object">
+          <End Role="Object" Type="Self.Object" Multiplicity="0..1" />
+          <End Role="Visiting" Type="Self.Visiting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Visiting">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Type_Event">
+          <End Role="Type_Event" Type="Self.Type_Event" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_Event">
+              <PropertyRef Name="ID_Type" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ID_Type_Event" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Visitor">
+          <End Role="Visitor" Type="Self.Visitor" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitor">
+              <PropertyRef Name="ID_Visitor" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ID_Visitor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visiting_Visitor">
+          <End Role="Visitor" Type="Self.Visitor" Multiplicity="0..1" />
+          <End Role="Visiting" Type="Self.Visiting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitor">
+              <PropertyRef Name="ID_Visitor" />
+            </Principal>
+            <Dependent Role="Visiting">
+              <PropertyRef Name="ID_Visitor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LEISUREEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Event" EntityType="Self.Event" />
+          <EntitySet Name="Object" EntityType="Self.Object" />
+          <EntitySet Name="Owner" EntityType="Self.Owner" />
+          <EntitySet Name="Request" EntityType="Self.Request" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Type_Event" EntityType="Self.Type_Event" />
+          <EntitySet Name="Type_Object" EntityType="Self.Type_Object" />
+          <EntitySet Name="Visiting" EntityType="Self.Visiting" />
+          <EntitySet Name="Visitor" EntityType="Self.Visitor" />
+          <AssociationSet Name="FK_Event_Object" Association="Self.FK_Event_Object">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Type_Event" Association="Self.FK_Event_Type_Event">
+            <End Role="Type_Event" EntitySet="Type_Event" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visiting_Event" Association="Self.FK_Visiting_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Visiting" EntitySet="Visiting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Object_Owner" Association="Self.FK_Object_Owner">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Object" EntitySet="Object" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Object_Type_Object" Association="Self.FK_Object_Type_Object">
+            <End Role="Type_Object" EntitySet="Type_Object" />
+            <End Role="Object" EntitySet="Object" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Object" Association="Self.FK_Request_Object">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visiting_Object" Association="Self.FK_Visiting_Object">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="Visiting" EntitySet="Visiting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Type_Event" Association="Self.FK_Request_Type_Event">
+            <End Role="Type_Event" EntitySet="Type_Event" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Visitor" Association="Self.FK_Request_Visitor">
+            <End Role="Visitor" EntitySet="Visitor" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visiting_Visitor" Association="Self.FK_Visiting_Visitor">
+            <End Role="Visitor" EntitySet="Visitor" />
+            <End Role="Visiting" EntitySet="Visiting" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="LEISUREModel.Users" />
+        </EntityContainer>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID_User" />
+          </Key>
+          <Property Name="ID_User" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище LEISUREModelContainer" CdmEntityContainer="LEISUREEntities">
+          <EntitySetMapping Name="Event">
+            <EntityTypeMapping TypeName="LEISUREModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="ID_Event" ColumnName="ID_Event" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="ID_Type" ColumnName="ID_Type" />
+                <ScalarProperty Name="Date_End" ColumnName="Date_End" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="Attendance" ColumnName="Attendance" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Object">
+            <EntityTypeMapping TypeName="LEISUREModel.Object">
+              <MappingFragment StoreEntitySet="Object">
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID_Type" ColumnName="ID_Type" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="Opened" ColumnName="Opened" />
+                <ScalarProperty Name="Attendance" ColumnName="Attendance" />
+                <ScalarProperty Name="ID_Owner" ColumnName="ID_Owner" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Owner">
+            <EntityTypeMapping TypeName="LEISUREModel.Owner">
+              <MappingFragment StoreEntitySet="Owner">
+                <ScalarProperty Name="ID_Owner" ColumnName="ID_Owner" />
+                <ScalarProperty Name="FIO_Boss" ColumnName="FIO_Boss" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request">
+            <EntityTypeMapping TypeName="LEISUREModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="ID_Request" ColumnName="ID_Request" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID_Type_Event" ColumnName="ID_Type_Event" />
+                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="ID_Visitor" ColumnName="ID_Visitor" />
+                <ScalarProperty Name="Date_End" ColumnName="Date_End" />
+                <ScalarProperty Name="Contact_Phone" ColumnName="Contact_Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="LEISUREModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type_Event">
+            <EntityTypeMapping TypeName="LEISUREModel.Type_Event">
+              <MappingFragment StoreEntitySet="Type_Event">
+                <ScalarProperty Name="ID_Type" ColumnName="ID_Type" />
+                <ScalarProperty Name="Name_type" ColumnName="Name_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type_Object">
+            <EntityTypeMapping TypeName="LEISUREModel.Type_Object">
+              <MappingFragment StoreEntitySet="Type_Object">
+                <ScalarProperty Name="ID_Type" ColumnName="ID_Type" />
+                <ScalarProperty Name="Name_Type" ColumnName="Name_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visiting">
+            <EntityTypeMapping TypeName="LEISUREModel.Visiting">
+              <MappingFragment StoreEntitySet="Visiting">
+                <ScalarProperty Name="ID_OV" ColumnName="ID_OV" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="ID_Visitor" ColumnName="ID_Visitor" />
+                <ScalarProperty Name="ID_Event" ColumnName="ID_Event" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visitor">
+            <EntityTypeMapping TypeName="LEISUREModel.Visitor">
+              <MappingFragment StoreEntitySet="Visitor">
+                <ScalarProperty Name="ID_Visitor" ColumnName="ID_Visitor" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="LEISUREModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID_User" ColumnName="ID_User" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

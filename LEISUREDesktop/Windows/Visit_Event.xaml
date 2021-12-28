@@ -1,0 +1,45 @@
+﻿<Window x:Class="LEISUREDesktop.Windows.Visit_Event"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LEISUREDesktop.Windows"
+        mc:Ignorable="d"
+        Title="Visit_Event" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="ListEvents" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="3" ItemsSource="{Binding events}" SelectionChanged="ListEvents_SelectionChanged"  >
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Width="100" Height="200">
+                        <TextBlock Text="{Binding Name}" Width="200"/>
+                        <TextBlock Text="{Binding Date_Start}"/>
+                        <TextBlock Text="{Binding Date_End}"/>
+                        <TextBlock Text="{Binding Status}"/>
+                        
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button x:Name="Quit" Grid.Row="3" Content="Назад" Grid.Column="2" Width="140" Click="QuitClick" Height="60"  Margin="10,0,10,10"/>
+        <Button x:Name="VisitEvent" Content="Посетить" Click="VisitEvent_Click" Width="140" Height="60" Grid.Row="3" Margin="10,0,10,10"/>
+    </Grid>
+</Window>
