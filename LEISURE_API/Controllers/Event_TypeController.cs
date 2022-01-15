@@ -28,12 +28,7 @@ namespace LEISURE_API.Controllers
             return result;
         }
 
-        [HttpPost]
-        public IActionResult Create(Type_Event type)
-        {
-            DataAccess.AddNewTypeEvent(type);
-            return NoContent();
-        }
+        
 
         [HttpDelete("{idType_Event}")]
         public IActionResult Delete(int idType_Event)
