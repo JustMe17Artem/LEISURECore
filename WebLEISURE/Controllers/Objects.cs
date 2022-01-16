@@ -9,6 +9,8 @@ namespace WebLEISURE.Controllers
 {
     public class Objects : Controller
     {
+        //не совсем корректное именование контроллера (Не критично)
+
         // GET: Objects
         public ActionResult Index()
         {

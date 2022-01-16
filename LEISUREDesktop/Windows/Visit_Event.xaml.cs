@@ -32,6 +32,8 @@ namespace LEISUREDesktop.Windows
         {
             try
             {
+                //Нестёртый закоменнтированный код (не критично)
+
                 //Nullable<int> ID_Event = (ListEvents.SelectedItem as LEISURECore.Event).ID_Object;
                 //Nullable<int> ID_Object = (ListEvents.SelectedItem as LEISURECore.Event).ID_Object;
                 int ID_Object = DataAccess.GetObject(VisitEvent.Content.ToString()).ID_Object;

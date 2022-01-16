@@ -38,6 +38,8 @@ namespace LEISUREDesktop.Windows
 
         private void VisitObject_Click(object sender, RoutedEventArgs e)
         {
+            //нестёртые закомментированные куски кода (Не критично)
+
             //int IdTattoo = DataAccess.GetTattoo(btnTattoo.Content.ToString()).IdTattoo;
             try
             {

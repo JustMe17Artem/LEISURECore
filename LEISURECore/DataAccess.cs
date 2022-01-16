@@ -20,6 +20,8 @@ namespace LEISURECore
 
         //    connection.Query($"delete from [dbo].Visiting where [ID_OV]={id}" );
         //}
+
+        //Нестёртый неиспользуемый фрагмент кода (не критично)
         public static List<Event> Refreshing()
         {
             List<Event> eventss = new List<Event>(DBConnection.connection.Event);
@@ -45,6 +47,9 @@ namespace LEISURECore
             DBConnection.connection.SaveChanges();
             return events;
         }
+
+        //Осмысленные названия методов. У методов по несколько перегрузок, код понятен (очень хорошо)
+
         public static List<Object> GetObjects()
         {
             List<Object> objectss = new List<Object>(DBConnection.connection.Object);

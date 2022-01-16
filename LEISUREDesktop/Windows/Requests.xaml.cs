@@ -59,7 +59,7 @@ namespace LEISUREDesktop.Windows
 
         private void ListRequests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            //Пустой обработчик на кнопку (Критично)
         }
     }
 }
